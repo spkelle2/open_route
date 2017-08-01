@@ -1,9 +1,27 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="http://cdn.rawgit.com/milligram/milligram/master/dist/milligram.css">
 <body>
-    input demand <br>
-    {{ demand_df | safe }} <br>
+    <div class="row">
+        <div class="column">
+            input demand <br>
+            {{ input_df | safe }}
+        </div>
+        <div class='column'>
+            smoothed demand <br>
+            {{ demand_df | safe }}
+        </div>
+    </div>
     <br>
-    site locations <br>
-    {{ site_df | safe }}
+
+    truck usage statistics <br>
+    {{ truck_table | safe }} <br>
+    <br>
+
+    {%for picture in pictures%}
+        <img src="/media/{{ picture }}"/>
+    {% endfor %}
+    <br>
+
+    {{ hauler_routes }}
+
 </body>

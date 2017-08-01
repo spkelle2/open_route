@@ -8,6 +8,14 @@
 <form action="{% url 'website:end' %}" method="post">
 {% csrf_token %}
 
+        travel rate (mph): <input type="number" name='travel_rate' value=50><br>
+
+        day length (minutes): <input type="number" name="day_length" value=720><br>
+
+        handling (minutes): <input type="number" name="handle" value=90><br>
+
+        window (days): <input type="number" name="window" value=2><br>
+
         <table>
                 <tr>
                         <th></th>
@@ -19,43 +27,43 @@
                 </tr>
                 <tr>
                         <td>Site 1</td>
-                        <td><input type="number" name="11" value=-2></td>
-                        <td><input type="number" name="12" value=0></td>
+                        <td><input type="number" name="11" value=0></td>
+                        <td><input type="number" name="12" value=-2></td>
                         <td><input type="number" name="13" value=0></td>
-                        <td><input type="number" name="14" value=2></td>
+                        <td><input type="number" name="14" value=0></td>
                         <td><input type="number" name="15" value=0></td>
                 </tr>
                 <tr>
                         <td>Site 2</td>
-                        <td><input type="number" name="21" value=-1></td>
-                        <td><input type="number" name="22" value=0></td>
-                        <td><input type="number" name="23" value=1></td>
-                        <td><input type="number" name="24" value=0></td>
+                        <td><input type="number" name="21" value=0></td>
+                        <td><input type="number" name="22" value=-1></td>
+                        <td><input type="number" name="23" value=0></td>
+                        <td><input type="number" name="24" value=1></td>
                         <td><input type="number" name="25" value=0></td>
                 </tr>
                 <tr>
                         <td>Site 3</td>
-                        <td><input type="number" name="31" value=3></td>
-                        <td><input type="number" name="32" value=0></td>
+                        <td><input type="number" name="31" value=0></td>
+                        <td><input type="number" name="32" value=3></td>
                         <td><input type="number" name="33" value=0></td>
-                        <td><input type="number" name="34" value=2></td>
+                        <td><input type="number" name="34" value=0></td>
                         <td><input type="number" name="35" value=0></td>
                 </tr>
                 <tr>
                         <td>Site 4</td>
                         <td><input type="number" name="41" value=0></td>
-                        <td><input type="number" name="42" value=-1></td>
-                        <td><input type="number" name="43" value=0></td>
+                        <td><input type="number" name="42" value=0></td>
+                        <td><input type="number" name="43" value=1></td>
                         <td><input type="number" name="44" value=0></td>
-                        <td><input type="number" name="45" value=1></td>
+                        <td><input type="number" name="45" value=0></td>
                 </tr>
                 <tr>
                         <td>Site 5</td>
                         <td><input type="number" name="51" value=0></td>
                         <td><input type="number" name="52" value=0></td>
-                        <td><input type="number" name="53" value=-2></td>
+                        <td><input type="number" name="53" value=0></td>
                         <td><input type="number" name="54" value=0></td>
-                        <td><input type="number" name="55" value=2></td>
+                        <td><input type="number" name="55" value=-2></td>
                 </tr>
         </table>
         <table>
@@ -64,7 +72,12 @@
                         <th>latitude</th>
                         <th>longitude</th>
                 </tr>
-                <tr>
+                  <tr>
+                        <td>Start</td>
+                        <td><input type="number" name="lat0" value=40.01></td>
+                        <td><input type="number" name="long0" value=88.16></td>
+                </tr>
+               <tr>
                         <td>Site 1</td>
                         <td><input type="number" name="lat1" value=40.12></td>
                         <td><input type="number" name="long1" value=88.24></td>
@@ -88,6 +101,11 @@
                         <td>Site 5</td>
                         <td><input type="number" name="lat5" value=39.84></td>
                         <td><input type="number" name="long5" value=88.95></td>
+                </tr>
+                <tr>
+                        <td>End</td>
+                        <td><input type="number" name="lat6" value=40.01></td>
+                        <td><input type="number" name="long6" value=88.16></td>
                 </tr>
         </table>
 
