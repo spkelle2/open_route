@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import itertools
+import collections
 
 def record_fleet_mileage(fleet_size, date_index, fleet_mileage, objective,
     fleet_upper_bound):
@@ -91,11 +92,11 @@ def record_hauler_hours(hauler_hours, hauler_routes, variables, handle,
     prob_vars = sorted(variables, key=lambda x: x.name[-1])
     hauler_numbers = range(fleet_size)
 
-    todays_routes = {}
+    todays_routes = []
 
     for k in hauler_numbers:
 
-        current_hauler_routes = {}
+        current_hauler_routes = []
         minutes_worked = 0
         
         for v in prob_vars:
@@ -125,22 +126,23 @@ def record_hauler_hours(hauler_hours, hauler_routes, variables, handle,
                         + handle)
 
                 # map i from its relative index to its original
-                if i > 0:
-                    print('a', daily_demand, 'b', i-1)
-                    # the issue is end of day to end of day - maybe add filter for that
-                    i = daily_demand.index[i-1]
-                if i == 0:
+                if i == 0 or i == len(locations) - 1:
                     i = 'hub'
+                else:
+                    i = 'site ' + str(daily_demand.index[i-1])
+
 
                 # map j from its relative index to its original
                 if j == len(locations) - 1 or j == 0:
-                    j == 'hub'
+                    j = 'hub'
                 else:
-                    j = daily_demand.index[j-1]
+                    j = 'site ' + str(daily_demand.index[j-1])
 
-                current_hauler_routes['(%s, %s)' % (i, j)] = v.varValue
+                if i != j:
+                    current_hauler_routes.append(('(%s, %s)' % (i, j), v.varValue))
 
-        todays_routes['hauler_%s' % (k + 1)] = current_hauler_routes
+        todays_routes.append(('hauler %s' % (k + 1),
+                collections.OrderedDict(current_hauler_routes)))
 
         # assume we have one less handle than sites visited
         minutes_worked -= handle
@@ -148,6 +150,7 @@ def record_hauler_hours(hauler_hours, hauler_routes, variables, handle,
 
         print('hauler %s = %s' % (k, minutes_worked))
 
-    hauler_routes['day_%s' % (date_index + 1)] = todays_routes
+    hauler_routes.append(('day %s' % (date_index + 1),
+        collections.OrderedDict(todays_routes)))
 
     return hauler_hours, hauler_routes

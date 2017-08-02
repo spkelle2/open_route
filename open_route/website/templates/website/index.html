@@ -3,18 +3,64 @@
 
 <h1> Welcome to Open-Route </h1>
 
-<p> Gimme yo data -- or use what I have provided here </p>
+<p> Open-Route is an open source application for hosting vehicle routing services
+with an intuitive interface. Open-Route exists to prove that mathematical
+optimization is not just a means for organizations to save money, but that it
+can actually be a source of revenue when embedded into an application and
+offered as a service.</p>
+
+<h2> Instructions </h2>
+<p> Fill in the boxes below with the needed parameters for the model. The first
+table is for daily demands for items at each site. The second is for the
+coordinates of each site, as well as the place where trucks start and end
+their day. On the next page, you'll receive a report of when each item is
+delivered and the suggested routes for trucks to take for delivering items
+each day. If you've had enough of me, skip below to the boxes and try my app!
+Otherwise, keep reading for a more in depth explanation of the model. </p>
+
+<h2> Explanation of the Vehicle Routing Model </h2>
+
+<p> The current model embedded in Open-Route describes a delivery network where all
+items being delivered are the exact size of the truck making the delivery. All
+items are identical and each site demands an integer amount of items. A positive
+demand of x represents that a site needs x items picked up. Demand of -x means the site
+needs x items dropped off.
+<br><br>
+Travel rate is the expected average rate of travel for trucks in the delivery
+network. Day length is the maximum amount of time someone driving a truck can
+work in a day. Work includes both the travel time between sites when making
+deliveries, but also the amount of time for handling, the unloading or loading
+of an item from the truck. 
+<br><br>
+A special feature of this model is that it allows
+for the rescheduling of deliveries within a window of days. For example, if
+the window is 2 days, items to be picked up can be grabbed the day they are
+scheduled or the day after; items to be dropped off can be delivered the day
+they're demand or the day before. The model will try to even out the number
+of deliveries being made each day as much as possible such that the fewest
+number of drivers and trucks will be needed to satisfy the demands. To turn
+off this feature, set the window = 1.
+</p>
+
+<h2> Model Inputs </h2>
 
 <form action="{% url 'website:end' %}" method="post">
 {% csrf_token %}
 
-        travel rate (mph): <input type="number" name='travel_rate' value=50><br>
-
-        day length (minutes): <input type="number" name="day_length" value=720><br>
-
-        handling (minutes): <input type="number" name="handle" value=90><br>
-
-        window (days): <input type="number" name="window" value=2><br>
+    <div class='row'>
+        <div class='column'>
+            travel rate (mph): <input type="number" name='travel_rate' value=50><br>
+        </div>
+        <div class='column'>
+            day length (minutes): <input type="number" name="day_length" value=720><br>
+        </div>
+        <div class='column'>
+            handling (minutes): <input type="number" name="handle" value=90><br>
+        </div>
+        <div class='column'>
+            delivery window (days): <input type="number" name="window" value=2><br>
+        </div>
+    </div>
 
         <table>
                 <tr>
@@ -73,7 +119,7 @@
                         <th>longitude</th>
                 </tr>
                   <tr>
-                        <td>Start</td>
+                        <td>Hub</td>
                         <td><input type="number" name="lat0" value=40.01></td>
                         <td><input type="number" name="long0" value=88.16></td>
                 </tr>
@@ -101,11 +147,6 @@
                         <td>Site 5</td>
                         <td><input type="number" name="lat5" value=39.84></td>
                         <td><input type="number" name="long5" value=88.95></td>
-                </tr>
-                <tr>
-                        <td>End</td>
-                        <td><input type="number" name="lat6" value=40.01></td>
-                        <td><input type="number" name="long6" value=88.16></td>
                 </tr>
         </table>
 

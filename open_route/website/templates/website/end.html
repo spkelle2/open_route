@@ -13,15 +13,30 @@
     </div>
     <br>
 
-    truck usage statistics <br>
-    {{ truck_table | safe }} <br>
-    <br>
+    Equipment Hauler Routes <br>
+    <div class='row'>
+    {% for day, haulers in hauler_routes.items %}
+        <div class='column'>
+        {{ day }} <br>
+        <br>
+        {% for hauler, routes in haulers.items %}
+            {{ hauler }} <br>
+            {% for route, occurrances in routes.items %}
+                {{ route }} = {{ occurrances }}<br>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
 
     {%for picture in pictures%}
         <img src="/media/{{ picture }}"/>
     {% endfor %}
     <br>
 
-    {{ hauler_routes }}
+    truck usage statistics <br>
+    {{ truck_table | safe }} <br>
+    <br>
 
 </body>

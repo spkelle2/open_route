@@ -45,7 +45,13 @@ def post_to_df(post_data):
                 sites[row, col] = post_data[key]
 
                 # site number (for travel_matrix generator in parameters.py)
-                sites[row, 0] = int(key[-1])
+                sites[row, 0] = row
+
+                # add entry for end location
+                if row == 0:
+                    row = len(sites) - 1
+                    sites[row, col] = post_data[key]
+                    sites[row, 0] = row
 
     return(demand, sites)
  
@@ -101,10 +107,11 @@ def end(request):
 
     truck_table = output['truck_table']
     pictures = output['pictures']
+    hauler_routes = output['hauler_routes']
 
     # change demand dataframe to match format from views.index
     indices = ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5']
-    days = ['day_1', 'day_2', 'day_3', 'day_4', 'day_5']
+    days = ['day 1', 'day 2', 'day 3', 'day 4', 'day 5']
     demand_df = pd.DataFrame(data=demand_df.values, index=indices, columns=days)
 
     # repull post data bc smoothing function was changing the input as well

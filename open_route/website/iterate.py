@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import datetime
+import collections
 
 from parameters import make_parameters
 from hauler_routing import route_fleet
@@ -149,7 +150,7 @@ def solve_variation(fixed_parameters, demand_df):
     hauler_hours = np.zeros((fleet_upper_bound + 1, num_dates))
 
     # dictionary to store routes run by each hauler each day
-    hauler_routes = {}
+    hauler_routes = []
     
     # record the sites with demand and how large that demand is each day
     for date in demand_df.columns:
@@ -178,6 +179,9 @@ def solve_variation(fixed_parameters, demand_df):
 
     hours_df = pd.DataFrame(data = hauler_hours, columns = demand_df.columns)
     #hours_df.to_csv('%s trucker.csv' % variation)
+    
+    # convert hauler_routes to orderedDict
+    hauler_routes = collections.OrderedDict(hauler_routes)
 
     data = {
         'demand_df': demand_df,
