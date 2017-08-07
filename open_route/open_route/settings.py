@@ -25,13 +25,16 @@ SECRET_KEY = 'j^tlrz*nx8g!s6q@mg+g+(c26&l#a#0a%i%!yt9$uf8e!atekm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['35.163.169.135']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'website.apps.WebsiteConfig',
+
+    'docs',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +125,6 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DOCS_ROOT = '/home/ubuntu/Equipment_Routing_Docs/_build/html'
+DOCS_ACCESS = 'public'

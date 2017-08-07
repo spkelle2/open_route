@@ -22,6 +22,7 @@ dependencies:
   - cssselect==1.0.1
   - cycler==0.10.0
   - django==1.11.3
+  - django-docs==0.2.1
   - docutils==0.13.1
   - functools32==3.2.3.post2
   - html5lib==0.999999999
@@ -51,4 +52,4 @@ dependencies:
   - weasyprint==0.39
   - webencodings==0.5.1
   - xlrd==1.0.0
-prefix: /Users/skelley/anaconda3/envs/env_or
+prefix: /home/ubuntu/miniconda3/envs/env_or

@@ -69,7 +69,7 @@ def end(request):
     handle = int(request.POST['handle'])
     fleet_upper_bound = 12
     window = int(request.POST['window'])
-    directory_name = '/Users/skelley/Documents/personal/senior_design/web_app/open_route/media/'
+    directory_name = '/home/ubuntu/open_route/open_route/media/'
     
     # pull the demand data and site coordinates from post data
     demand, sites = post_to_df(request.POST)
