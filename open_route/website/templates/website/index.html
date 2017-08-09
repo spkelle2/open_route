@@ -4,47 +4,58 @@
 <h1> Welcome to Open-Route </h1>
 
 <p> Open-Route is an open source application for hosting vehicle routing services
-with an intuitive interface. Open-Route exists to prove that mathematical
-optimization is not just a means for organizations to save money, but that it
-can actually be a source of revenue when embedded into an application and
-offered as a service.</p>
+with an intuitive interface. The intention in providing this service is to show
+that mathematical optimization is not only a means for organizations to save money,
+but that it can also be a source of revenue when offered as a service.</p>
 
-<h2> Instructions </h2>
-<p> Fill in the boxes below with the needed parameters for the model. The first
-table is for daily demands for items at each site. The second is for the
-coordinates of each site, as well as the place where trucks start and end
-their day. On the next page, you'll receive a report of when each item is
-delivered and the suggested routes for trucks to take for delivering items
-each day. If you've had enough of me, skip below to the boxes and try my app!
-Otherwise, keep reading for a more in depth explanation of the model. </p>
+<b> the currently hosted service plans delivery routes over a 5 day horizon </b>
 
-<h2> Explanation of the Vehicle Routing Model </h2>
-
-<p> The current model embedded in Open-Route describes a delivery network where all
-items being delivered are the exact size of the truck making the delivery. All
-items are identical and each site demands an integer amount of items. A positive
-demand of x represents that a site needs x items picked up. Demand of -x means the site
-needs x items dropped off.
-<br><br>
-Travel rate is the expected average rate of travel for trucks in the delivery
-network. Day length is the maximum amount of time someone driving a truck can
-work in a day. Work includes both the travel time between sites when making
-deliveries, but also the amount of time for handling, the unloading or loading
-of an item from the truck. 
-<br><br>
-A special feature of this model is that it allows
-for the rescheduling of deliveries within a window of days. For example, if
-the window is 2 days, items to be picked up can be grabbed the day they are
-scheduled or the day after; items to be dropped off can be delivered the day
-they're demand or the day before. The model will try to even out the number
-of deliveries being made each day as much as possible such that the fewest
-number of drivers and trucks will be needed to satisfy the demands. To turn
-off this feature, set the window = 1.
+<h2> Objective </h2>
+<p> The currently hosted service has two objectives:
+<ul>
+    <li> even out the number of deliveries made each day subject to all
+        deliveries occurring within a window of the original delivery date </li>
+    <li> find the optimal route for each delivery truck to make each day </li>
+</ul>
 </p>
 
-<a href="docs/index.html">this link is dead</a>
+<h2> Assumptions </h2>
+<p> The currently hosted service makes the following assumptions:
+<ul>
+    <li> all items in the network are identical and fill the capacity of the
+    delivery truck exactly </li>
 
-<h2> Model Inputs </h2>
+    <li> each site demands an integer number of items on a given day </li>
+
+    <li> a negative demand specifies items need dropped off at a given site
+    on a given day - positive specifies items need picked up </li>
+
+    <li> items can be dropped-off at a site within <i> delivery window </i> days including
+        and prior to the demand date </li>
+
+    <li> items can be picked-up from a site within
+    <i> delivery window </i> days including and after the demand date </li>
+
+    <li> <i> handling </i> is the amount of time required to load or unload
+    an item from the delivery truck </li>
+
+    <li> <i> day length </i> is the total amount of time a delivery truck can
+    be in service during a day - including both driving and handling time </li>
+
+    <li> <i> travel rate </i> is the average speed at which delivery trucks
+    travel </li>
+</ul>
+</p>
+
+<h2> Documentation </h2>
+<p> If you have more questions about how the currently hosted service works,
+you're invited to check out <a href="docs/index.html">this documentation</a>.
+The link documents the python package and the optimization models on which the
+currently hosted service runs. It also explains the environment that inspired
+the objective and assumptions.</p>
+
+<h2> Inputs </h2>
+<p> Fill out the boxes below and hit ok when you're ready </p>
 
 <form action="{% url 'website:end' %}" method="post">
 {% csrf_token %}
@@ -64,64 +75,70 @@ off this feature, set the window = 1.
         </div>
     </div>
 
-        <table>
+    <div class='row'>
+        <div class='column'>
+            <h3> Daily Demands for Items </h3>
+             <table>
                 <tr>
-                        <th></th>
-                        <th>Day 1</th>
-                        <th>Day 2</th>
-                        <th>Day 3</th>
-                        <th>Day 4</th>
-                        <th>Day 5</th>
+                    <th></th>
+                    <th>Day 1</th>
+                    <th>Day 2</th>
+                    <th>Day 3</th>
+                    <th>Day 4</th>
+                    <th>Day 5</th>
                 </tr>
                 <tr>
-                        <td>Site 1</td>
-                        <td><input type="number" name="11" value=0></td>
-                        <td><input type="number" name="12" value=-2></td>
-                        <td><input type="number" name="13" value=0></td>
-                        <td><input type="number" name="14" value=0></td>
-                        <td><input type="number" name="15" value=0></td>
+                    <td>Site 1</td>
+                    <td><input type="number" name="11" value=0></td>
+                    <td><input type="number" name="12" value=-2></td>
+                    <td><input type="number" name="13" value=0></td>
+                    <td><input type="number" name="14" value=0></td>
+                    <td><input type="number" name="15" value=0></td>
                 </tr>
                 <tr>
-                        <td>Site 2</td>
-                        <td><input type="number" name="21" value=0></td>
-                        <td><input type="number" name="22" value=-1></td>
-                        <td><input type="number" name="23" value=0></td>
-                        <td><input type="number" name="24" value=1></td>
-                        <td><input type="number" name="25" value=0></td>
+                    <td>Site 2</td>
+                    <td><input type="number" name="21" value=0></td>
+                    <td><input type="number" name="22" value=-1></td>
+                    <td><input type="number" name="23" value=0></td>
+                    <td><input type="number" name="24" value=1></td>
+                    <td><input type="number" name="25" value=0></td>
                 </tr>
                 <tr>
-                        <td>Site 3</td>
-                        <td><input type="number" name="31" value=0></td>
-                        <td><input type="number" name="32" value=3></td>
-                        <td><input type="number" name="33" value=0></td>
-                        <td><input type="number" name="34" value=0></td>
-                        <td><input type="number" name="35" value=0></td>
+                    <td>Site 3</td>
+                    <td><input type="number" name="31" value=0></td>
+                    <td><input type="number" name="32" value=3></td>
+                    <td><input type="number" name="33" value=0></td>
+                    <td><input type="number" name="34" value=0></td>
+                    <td><input type="number" name="35" value=0></td>
                 </tr>
                 <tr>
-                        <td>Site 4</td>
-                        <td><input type="number" name="41" value=0></td>
-                        <td><input type="number" name="42" value=0></td>
-                        <td><input type="number" name="43" value=1></td>
-                        <td><input type="number" name="44" value=0></td>
-                        <td><input type="number" name="45" value=0></td>
+                    <td>Site 4</td>
+                    <td><input type="number" name="41" value=0></td>
+                    <td><input type="number" name="42" value=0></td>
+                    <td><input type="number" name="43" value=1></td>
+                    <td><input type="number" name="44" value=0></td>
+                    <td><input type="number" name="45" value=0></td>
                 </tr>
                 <tr>
-                        <td>Site 5</td>
-                        <td><input type="number" name="51" value=0></td>
-                        <td><input type="number" name="52" value=0></td>
-                        <td><input type="number" name="53" value=0></td>
-                        <td><input type="number" name="54" value=0></td>
-                        <td><input type="number" name="55" value=-2></td>
+                    <td>Site 5</td>
+                    <td><input type="number" name="51" value=0></td>
+                    <td><input type="number" name="52" value=0></td>
+                    <td><input type="number" name="53" value=0></td>
+                    <td><input type="number" name="54" value=0></td>
+                    <td><input type="number" name="55" value=-2></td>
                 </tr>
-        </table>
-        <table>
+            </table>
+        </div>
+        <div class='column'>
+            <h3>Site Locations</h3>
+            <table>
                 <tr>
                         <th></th>
                         <th>latitude</th>
                         <th>longitude</th>
                 </tr>
                   <tr>
-                        <td>Hub</td>
+                        <td>Start/End</td>
                         <td><input type="number" name="lat0" value=40.01></td>
                         <td><input type="number" name="long0" value=88.16></td>
                 </tr>
@@ -150,8 +167,9 @@ off this feature, set the window = 1.
                         <td><input type="number" name="lat5" value=39.84></td>
                         <td><input type="number" name="long5" value=88.95></td>
                 </tr>
-        </table>
-
-
-        <input type="submit" value='ok!' />
+            </table>
+        </div>
+    </div>
+    
+    <input type="submit" value='ok!' />
 </form>
