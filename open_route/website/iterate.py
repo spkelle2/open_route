@@ -15,13 +15,13 @@ def solve_day(fixed_parameters, daily_inputs):
 
     Creates parameters specific to solving a given day's truck and hauler usage.
     Uses extension of a Vehicle Routing problem to determine how many
-    semi-trucks/haulers were needed, how many miles were driven, and how long
-    each hauler works.
+    semi-trucks/haulers were needed, how many miles were driven, how long each
+    hauler works, and what routes each hauler took each day.
 
     Parameters
     ----------
     fixed_parameters : dict
-        Parameters that are constant for any variation and region (as defined
+        Parameters that are constant for the whole horizon (as defined
         in the main function)
 
     daily_inputs : dict
@@ -35,6 +35,9 @@ def solve_day(fixed_parameters, daily_inputs):
 
     hauler_hours : numpy.ndarray
         How many minutes each hauler works each day
+
+    hauler_routes : OrderedDict
+        What routes each hauler took each day
 
     """
 
@@ -141,6 +144,8 @@ def solve_variation(fixed_parameters, demand_df):
     fleet_upper_bound = fixed_parameters['fleet_upper_bound']
     window = fixed_parameters['window']
 
+    # smooth our input demand as evenly as possible
+    demand_df = smooth_demand(demand_df, window, start_date, end_date)
     num_dates = len(demand_df.columns)
     
     # matrix to store miles run by each fleet of a given size each day
@@ -191,5 +196,7 @@ def solve_variation(fixed_parameters, demand_df):
     }
 
     # make report to record a summary of the results for this variation
-    return(make_report(data, fixed_parameters))
+    template_vars = make_report(data, fixed_parameters)
+
+    return(template_vars)
 

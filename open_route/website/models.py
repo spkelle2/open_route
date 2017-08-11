@@ -7,11 +7,10 @@ from django.utils import timezone
 # Create your models here.
 
 class Run(models.Model):
-    first_name = models.CharField(max_length=50, default='')
-    last_name = models.CharField(max_length=50, default='')
-    email = models.CharField(max_length=100, default='')
-    data_location = models.CharField(max_length=200, default='')
+    name = models.CharField(max_length=50, default='')
     run_date = models.DateTimeField(default=timezone.now)
+    affiliation = models.CharField(max_length=50, default='')
+    fun_fact = models.CharField(max_length=200, default='')
 
     def __str__(self):
-        return self.first_name
+        return self.name

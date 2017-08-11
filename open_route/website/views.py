@@ -53,7 +53,18 @@ def post_to_df(post_data):
                     sites[row, col] = post_data[key]
                     sites[row, 0] = row
 
-    return(demand, sites)
+    # create dataframe from input demand that can be passed to routing service
+    dates = ['2015-01-01', '2015-01-02', '2015-01-03', '2015-01-04', '2015-01-05']
+    demand_df = pd.DataFrame(data=demand, columns=dates)
+
+    # start indices at 1 as required by parameters.py
+    demand_df.index = demand_df.index + 1
+  
+    # create data frame to record our coordinates for the problem
+    cols = ['Project #', 'Lat', 'Long']
+    site_df = pd.DataFrame(data=sites, columns=cols)
+
+    return(demand_df, site_df)
  
 
 
@@ -63,27 +74,28 @@ def end(request):
     # give arbitrary values to start and end to fit function inputs
     start_date = '2015-01-01'
     end_date = '2015-01-05'
-
     travel_rate = float(request.POST['travel_rate'])/60
     day_length = int(request.POST['day_length'])
     handle = int(request.POST['handle'])
     fleet_upper_bound = 12
     window = int(request.POST['window'])
-    directory_name = '/home/ubuntu/open_route/open_route/media/'
+
+    # save the user data from this instance in our database
+    current_run = Run()
+    current_run.name = request.POST['name']
+    current_run.affiliation = request.POST['affiliation']
+    current_run.fun_fact = request.POST['fun_fact']
+    current_run.save()
+
+    # specify the directory being used based on OS
+    #directory_name = '/home/ubuntu/open_route/open_route/media/'
+    directory_name = '/Users/skelley/Documents/personal/senior_design/web_app/open_route/media/'
     
     # pull the demand data and site coordinates from post data
-    demand, sites = post_to_df(request.POST)
+    demand_df, site_df = post_to_df(request.POST)
 
-    # create dataframe from input that can be put into smoothing function
-    dates = ['2015-01-01', '2015-01-02', '2015-01-03', '2015-01-04', '2015-01-05']
-    demand_df = pd.DataFrame(data=demand, columns=dates)
-
-    # start indices at 1 as required by parameters.py
-    demand_df.index = demand_df.index + 1
-
-    # create data frame to record our coordinates for the problem
-    cols = ['Project #', 'Lat', 'Long'] 
-    site_df = pd.DataFrame(data=sites, columns=cols)
+    # save a copy of our demand to show side by side with smoothed demand
+    input_df = demand_df.copy()
 
     fixed_parameters = {
         'start_date' : start_date,
@@ -97,10 +109,6 @@ def end(request):
         'site_df' : site_df
     }
 
-    # smooth our demand as evenly as possible, pass nothing for variation
-    # since we only have one variation to solve for
-    demand_df = smooth_demand(demand_df, '', window, start_date, end_date)
-
     # run the vehicle routing module for each day and return a dictionary
     # detailing usage statistics
     output = solve_variation(fixed_parameters, demand_df)
@@ -108,17 +116,14 @@ def end(request):
     truck_table = output['truck_table']
     pictures = output['pictures']
     hauler_routes = output['hauler_routes']
+    demand_df = output['demand_df']
 
-    # change demand dataframe to match format from views.index
+    # change demand dataframes to match format from views.index
     indices = ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5']
     days = ['day 1', 'day 2', 'day 3', 'day 4', 'day 5']
+
     demand_df = pd.DataFrame(data=demand_df.values, index=indices, columns=days)
-
-    # repull post data bc smoothing function was changing the input as well
-    demand, sites = post_to_df(request.POST) 
-
-    # create data frame resembling input matrix from index page
-    input_df = pd.DataFrame(data=demand, index=indices, columns=days)
+    input_df = pd.DataFrame(data=input_df.values, index=indices, columns=days)
 
     template = loader.get_template('website/end.html')
     context = {

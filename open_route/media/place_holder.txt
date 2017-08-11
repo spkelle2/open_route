@@ -1,0 +1,2 @@
+This file keeps the media directory from being deleted when gitignore removes
+all the pngs.

@@ -187,7 +187,7 @@ def iterate(period_inputs, current_start_index):
 
 	return period_inputs
 
-def smooth_demand(demand_df, variation, window, start_date, end_date):
+def smooth_demand(demand_df, window, start_date, end_date):
 	"""Smooth the demand for drop-offs and pick-ups for a given variation as
 	much as possible constrained to the time window
 
@@ -200,9 +200,6 @@ def smooth_demand(demand_df, variation, window, start_date, end_date):
 	----------
     demand_df : pandas.core.fame.DataFrame
 	    dataframe of demands to be smoothed
-
-	variation : str
-	    which variation of a proposed region for which we want to smooth demand
 
 	window : str
 	    The number of different days to allow a job site to have equipment
@@ -239,7 +236,7 @@ def smooth_demand(demand_df, variation, window, start_date, end_date):
     # need to find a way to refresh df if running for multiple periods
 	for period in periods:
 
-        # commented out for web app
+        # commented out for web app - deep copy if re-implemented
 		# dataframe with demands for drop-offs/pick-ups at each site each day
         #demand_df = pd.read_excel(file_path, sheetname=variation, index_col=0)
 		

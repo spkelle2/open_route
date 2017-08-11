@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from jinja2 import Environment, FileSystemLoader
-from weasyprint import HTML
 
 # compute summary statistics for each equipment hauler
 # hours_df (how much each hauler works each day) is passed in as df when run
@@ -41,7 +40,7 @@ def summarize(df):
     summary['Average Hours Worked per Utilized Day'] = \
         summary['Hours Worked in Time Range']/summary['Days Utilized']
     
-    # drop all equipment haulers who didn't work at all throughout the year
+    # drop all equipment haulers who didn't work at all throughout the time range
     summary = summary[pd.notnull(summary['Average Hours Worked per Utilized Day'])]
     
     # round all statistics to nice-looking precision
@@ -176,9 +175,6 @@ def equipment_graph_maker(demand_df, directory_name, plotlist):
     image_name = 'Equipment_Set_Utilization.png'
     graph_location = directory_name + image_name
 
-    # patch for saving on mac -- replace spaces with underscores
-    #graph_location = graph_location.replace(' ', '_')
-
     plt.savefig(graph_location)
     plotlist.append(image_name)
 
@@ -197,9 +193,6 @@ def equipment_graph_maker(demand_df, directory_name, plotlist):
     # save it and append to plot list
     image_name = 'Cumulative_Equipment_Set_Utilization.png'
     graph_location = directory_name + image_name
- 
-    # patch for saving on mac -- replace spaces with underscores
-    #graph_location = graph_location.replace(' ', '_')
    
     plt.savefig(graph_location)
     plotlist.append(image_name)
@@ -256,8 +249,6 @@ def hauler_graph_maker(hours_df, index, plotlist, directory_name):
     image_name = 'Truck%s.png' % index
     graph_location = directory_name + image_name
   
-    # patch for saving on mac -- replace spaces with underscores
-    #graph_location = graph_location.replace(' ', '_')
     plt.savefig(graph_location)
     
     # add where we saved this plot to the list of plots to add to the report
@@ -266,7 +257,7 @@ def hauler_graph_maker(hours_df, index, plotlist, directory_name):
     return plotlist
 
 def make_report(data, fixed_parameters):
-    """Creates a PDF report of truck and equipment usage over the time range
+    """Creates input for a report of truck and equipment usage over the time range
 
     Details miles traveled by the fleet of trucks, utilization rates for each
     equipment hauler, and utilization rates for each set of equipment.
@@ -312,6 +303,7 @@ def make_report(data, fixed_parameters):
         'truck_table' : hauler_summary.to_html(),
         'pictures' : plotlist,
         'hauler_routes' : hauler_routes
+        'demand_df' : demand_df
     }
 
     return template_vars

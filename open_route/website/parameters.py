@@ -34,9 +34,9 @@ def make_route_constraints(demand_list):
     can be travelled. Travelling the route from i to j never happens if they both
     need drop-offs, both need pick-ups, or i is where a hauler ends his day. If
     i and j have opposite demand types (one with drop-offs, the other pick-ups),
-    i to j can be travelled as many times as the minimum demand had by the two
-    sites. We place no constraint on how many times a hauler can return to the
-    hub to reload his trailer.
+    i to j can be travelled as many times as the minimum absolute value of
+    demand had by the two sites. We place no constraint on how many times a hauler
+    can return to the hub to reload his trailer.
 
     Parameters
     ----------
