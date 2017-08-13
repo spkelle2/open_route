@@ -120,7 +120,7 @@ def solve_day(fixed_parameters, daily_inputs):
             
     return fleet_mileage, hauler_hours, hauler_routes
 
-def solve_variation(fixed_parameters, demand_df):
+def solve_horizon(fixed_parameters, demand_df):
     """ Find truck, hauler, and equipment usages for all days in our range.
 
     Finds and smoothes delivery demand for all days. Determines day by day

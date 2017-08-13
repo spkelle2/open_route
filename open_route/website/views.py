@@ -7,8 +7,7 @@ from django.template import loader
 from django.utils import timezone
 
 from .models import Run
-from .smoothing import smooth_demand
-from .iterate import solve_variation
+from .iterate import solve_horizon
 
 import numpy as np
 import pandas as pd
@@ -111,7 +110,7 @@ def end(request):
 
     # run the vehicle routing module for each day and return a dictionary
     # detailing usage statistics
-    output = solve_variation(fixed_parameters, demand_df)
+    output = solve_horizon(fixed_parameters, demand_df)
 
     truck_table = output['truck_table']
     pictures = output['pictures']

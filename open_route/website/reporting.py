@@ -298,12 +298,12 @@ def make_report(data, fixed_parameters):
 
     # variables to be passed back to views.end
     template_vars = {
-        'truck_miles' : 'Total Miles Driven by All Trucks: %s' % fleet_miles,
-        'table_intro' : 'Usage Statistics by Truck',
-        'truck_table' : hauler_summary.to_html(),
-        'pictures' : plotlist,
-        'hauler_routes' : hauler_routes
-        'demand_df' : demand_df
+        'truck_miles': 'Total Miles Driven by All Trucks: %s' % fleet_miles,
+        'table_intro': 'Usage Statistics by Truck',
+        'truck_table': hauler_summary.to_html(),
+        'pictures': plotlist,
+        'hauler_routes': hauler_routes,
+        'demand_df': demand_df
     }
 
     return template_vars
