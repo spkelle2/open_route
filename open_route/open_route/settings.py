@@ -126,5 +126,5 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DOCS_ROOT = '/home/ubuntu/Equipment_Routing_Docs/_build/html'
+DOCS_ROOT = '/home/ubuntu/routing_docs/_build/html'
 DOCS_ACCESS = 'public'

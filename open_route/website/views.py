@@ -87,8 +87,8 @@ def end(request):
     current_run.save()
 
     # specify the directory being used based on OS
-    #directory_name = '/home/ubuntu/open_route/open_route/media/'
-    directory_name = '/Users/skelley/Documents/personal/senior_design/web_app/open_route/media/'
+    directory_name = '/home/ubuntu/open_route/open_route/media/'
+    #directory_name = '/Users/skelley/Documents/personal/senior_design/web_app/open_route/media/'
     
     # pull the demand data and site coordinates from post data
     demand_df, site_df = post_to_df(request.POST)
