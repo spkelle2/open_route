@@ -3,17 +3,17 @@
 <body>
     <div class="row">
         <div class="column">
-            input demand <br>
+            <h3> The original delivery demands </h3>
             {{ input_df | safe }}
         </div>
         <div class='column'>
-            smoothed demand <br>
+            <h3> The optimal delivery demands </h3>
             {{ demand_df | safe }}
         </div>
     </div>
     <br>
 
-    Equipment Hauler Routes <br>
+    <h3> Daily truck routes </h3>
     <div class='row'>
     {% for day, haulers in hauler_routes.items %}
         <div class='column'>
@@ -30,12 +30,13 @@
     {% endfor %}
     </div>
 
+    <h3> Hours each truck driver works each day </h3>
     {%for picture in pictures%}
         <img src="/media/{{ picture }}"/>
     {% endfor %}
     <br>
 
-    truck usage statistics <br>
+    <h3> Truck usage statistics </h3>
     {{ truck_table | safe }} <br>
     <br>
 
