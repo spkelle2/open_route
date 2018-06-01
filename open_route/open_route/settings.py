@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['76.16.100.18', 'www.open-route.website', '127.0.0.1',
 		 'http://open-route.website', 'open-route.website',
-		 '18.236.154.241']
+		 '18.236.154.241', '52.34.0.136']
 
 
 # Application definition

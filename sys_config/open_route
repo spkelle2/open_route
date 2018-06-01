@@ -1,6 +1,6 @@
 server {
      listen 80;
-     server_name 18.236.154.241;
+     server_name 52.34.0.136;
      location = /favicon.ico { access_log off; log_not_found off; }
      location /static/ {
          root /home/ubuntu/open_route/open_route;
