@@ -1,0 +1,12 @@
+server {
+     listen 80;
+     server_name 18.236.154.241;
+     location = /favicon.ico { access_log off; log_not_found off; }
+     location /static/ {
+         root /home/ubuntu/open_route/open_route;
+     }
+     location / {
+         include proxy_params;
+         proxy_pass http://unix:/home/ubuntu/open_route/open_route/open_route.sock;
+     }
+}
