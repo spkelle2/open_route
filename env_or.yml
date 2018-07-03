@@ -49,5 +49,5 @@ dependencies:
     - urllib3==1.21.1
     - webencodings==0.5.1
     - xlrd==1.0.0
-prefix: /home/sean/miniconda3/envs/env_ss
+prefix: /home/sean/miniconda3/envs/env_or
 
