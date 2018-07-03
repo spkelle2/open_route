@@ -1,0 +1,7 @@
+NAME='open_route'
+DJANGODIR=~/open_route/open_route
+SOCKFILE=~/open_route/open_route/open_route.sock
+USER=ubuntu
+NUM_WORKERS=3
+DJANGO_SETTINGS_MODULE=open_route.settings
+DJANGO_WSGI_MODULE=open_route.wsgi
