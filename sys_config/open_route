@@ -1,22 +1,22 @@
 upstream open_route_server {
-    server unix:/home/ubuntu/open_route/open_route/open_route.sock fail_timeout=0;
+    server unix:/home/sean/open_route/open_route/open_route.sock fail_timeout=0;
 }
 
 server {
-    listen   80;
+    listen   8080;
     server_name open-route.website www.open-route.website;
 
     client_max_body_size 4G;
 
-    access_log /home/ubuntu/open_route/logs/nginx-access.log;
-    error_log /home/ubuntu/open_route/logs/nginx-error.log;
+    access_log /home/sean/open_route/logs/nginx-access.log;
+    error_log /home/sean/open_route/logs/nginx-error.log;
 
     location /static/ {
-        alias   /home/ubuntu/open_route/open_route/static/;
+        alias   /home/sean/open_route/open_route/static/;
     }
 
     location /media/ {
-        alias   /home/ubuntu/open_route/open_route/media/;
+        alias   /home/sean/open_route/open_route/media/;
     }
 
     location / {
@@ -26,6 +26,6 @@ server {
         if (!-f $request_filename) {
             proxy_pass http://open_route_server;
             break;
-	}
+	    }
     }
 }

@@ -5,12 +5,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
+from django.conf import settings
 
 from .models import Run
 from .iterate import solve_horizon
 
 import numpy as np
 import pandas as pd
+import os
 
 def index(request):
     template = loader.get_template('website/index.html')
@@ -87,7 +89,8 @@ def end(request):
     current_run.save()
 
     # specify the directory being used based on OS
-    directory_name = '/home/ubuntu/open_route/open_route/media/'
+    directory_name = settings.MEDIA_ROOT
+    #directory_name = '/home/ubuntu/open_route/open_route/media/'
     #directory_name = '/Users/skelley/Documents/personal/senior_design/web_app/open_route/media/'
     
     # pull the demand data and site coordinates from post data

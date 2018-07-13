@@ -5,8 +5,23 @@
 # install needed ubuntu packages
 apt-get install gcc nginx supervisor
 
-# move supervisor file to conf.d folder and update supervisor
+# install conda
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+
+# install conda env
+conda env create -f ../env_or.yml
+
+# move supervisor file to conf.d folder
 cp open_route.conf /etc/supervisor/conf.d/
+
+# make sure supervisor comes up after reboot
+systemctl enable supervisor
+
+# make sure supervisor starts now
+systemctl start supervisor
+
+# have supervisor reread the conf files and restart apps with changed confs
 supervisorctl reread
 supervisorctl update
 
