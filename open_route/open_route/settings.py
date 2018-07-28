@@ -25,7 +25,7 @@ SECRET_KEY = 'j^tlrz*nx8g!s6q@mg+g+(c26&l#a#0a%i%!yt9$uf8e!atekm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.open-route.website', '127.0.0.1']
+ALLOWED_HOSTS = ['www.open-route.website', '127.0.0.1', 'open-route.website']
 
 
 # Application definition

@@ -3,7 +3,7 @@ upstream open_route_server {
 }
 
 server {
-    listen   8080;
+    listen   80;
     server_name open-route.website www.open-route.website;
 
     client_max_body_size 4G;
