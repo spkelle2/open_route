@@ -1,0 +1,26 @@
+#!/bin/bash
+
+NAME='open_route'
+DJANGODIR=~/open_route/open_route
+SOCKFILE=~/open_route/open_route/open_route.sock
+ENVDIR=~/miniconda3/envs/env_or/bin/gunicorn
+USER=ubuntu
+NUM_WORKERS=3
+DJANGO_SETTINGS_MODULE=open_route.settings
+DJANGO_WSGI_MODULE=open_route.wsgi
+
+echo "Starting $NAME as `whoami`"
+
+# Activate the virtual environment
+source activate env_or
+
+# Change to our working directory
+cd $DJANGODIR
+
+exec $ENVDIR ${DJANGO_WSGI_MODULE}:application \
+    --name $NAME \
+    --workers $NUM_WORKERS \
+    --user=$USER \
+    --bind=unix:$SOCKFILE \
+    --log-level=debug \
+    --log-file=-
