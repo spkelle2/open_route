@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['www.open-route.website', '127.0.0.1', 'open-route.website']
 
-
 # Application definition
 
 INSTALLED_APPS = [
