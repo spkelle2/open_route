@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # run with sudo - make sure to set sean/ubuntu in all files
+# %s/sean/ubuntu/gc - change user in setup files
+# to get sock file: make sure paths in nginx, open_route.conf and gunicorn
+# start are correct
 
 # install needed ubuntu packages
 apt-get install gcc nginx supervisor

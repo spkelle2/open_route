@@ -4,3 +4,4 @@
 *.png
 *.sock
 *.log
+*db.sqlite3

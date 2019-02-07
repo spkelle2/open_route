@@ -4,6 +4,7 @@ import itertools
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import os
 from jinja2 import Environment, FileSystemLoader
 
 # compute summary statistics for each equipment hauler
@@ -247,7 +248,7 @@ def hauler_graph_maker(hours_df, index, plotlist, directory_name):
     fig.suptitle('Truck %s Utilization by Day' % (index))
 
     image_name = 'Truck%s.png' % index
-    graph_location = directory_name + image_name
+    graph_location = os.path.join(directory_name, image_name)
   
     plt.savefig(graph_location)
     
